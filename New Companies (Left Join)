@@ -1,0 +1,13 @@
+SELECT c.company_code, c.founder, COUNT(DISTINCT lm.lead_manager_code) AS total_leads, COUNT(DISTINCT sm.senior_manager_code)AS total_snr, COUNT(DISTINCT m.manager_code) AS total_mgr, 
+COUNT(DISTINCT e.employee_code) AS total_emp
+FROM Company c
+LEFT JOIN Lead_Manager lm
+ON lm.company_code = c.company_code
+LEFT JOIN Senior_Manager sm
+ON sm.lead_manager_code = lm.lead_manager_code
+LEFT JOIN Manager m
+ON m.senior_manager_code = sm.senior_manager_code
+LEFT JOIN Employee e
+ON e.manager_code = m.manager_code
+GROUP BY c.company_code, c.founder
+ORDER BY c.company_code;
